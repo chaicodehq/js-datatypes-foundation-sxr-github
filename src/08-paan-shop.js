@@ -47,16 +47,47 @@
  */
 export function createPaanOrder(basePaan, customizations) {
   // Your code here
+  if(typeof basePaan != "object" || basePaan == null || basePaan == ""){
+    return {}
+  }
+
+  if(typeof customizations != "object" || customizations == null || customizations == ""){
+    return {...basePaan}
+  }
+
+  const newObj = Object.assign({}, basePaan, customizations)
+  
+  return newObj
 }
 
 export function freezeMenu(menu) {
   // Your code here
+  if(typeof menu != "object" || menu == null || menu == ""){
+    return {}
+  }
+  return Object.freeze(menu)
 }
 
 export function updatePrices(menu, increase) {
   // Your code here
+  if(typeof menu != "object" || menu == null || menu == ""  || typeof increase != "number"){
+    return {}
+  }
+
+ const newPrices = Object.entries(menu)
+
+  const updatedEntries = newPrices.map(([item, price]) => [item , price + increase])
+
+  return Object.fromEntries(updatedEntries)
 }
+
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
   // Your code here
+  const isObj = (val) => val && typeof val === 'object' && !Array.isArray(val);
+
+  return { 
+    ...(isObj(regularMenu) ? regularMenu : {}), 
+    ...(isObj(specialsMenu) ? specialsMenu : {}) 
+  };
 }

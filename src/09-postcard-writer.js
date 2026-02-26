@@ -12,7 +12,7 @@
  *
  *   1. writePostcard(sender, receiver, message)
  *      - Template literal se formatted postcard banao:
- *        "Priy {receiver},\n\n{message}\n\nAapka/Aapki,\n{sender}"
+ *        "Priy {receiver},\n\n{message}\n\nAapka/Aapki,\n{sender}" 
  *      - Agar koi bhi param string nahi hai ya trim ke baad empty hai, return ""
  *      - Example: writePostcard("Guddu", "Dadi ji", "Hum theek hain")
  *                 => "Priy Dadi ji,\n\nHum theek hain\n\nAapka/Aapki,\nGuddu"
@@ -53,20 +53,51 @@
  */
 export function writePostcard(sender, receiver, message) {
   // Your code here
+  if( typeof sender !== "string"
+    || typeof receiver !== "string"
+    || typeof message !== "string"
+    || !message.trim() 
+    || !sender.trim() 
+    || !receiver.trim() 
+
+  ){
+    return ""
+  }
+
+  return (`Priy ${receiver.trim()},\n\n${message.trim()}\n\nAapka/Aapki,\n${sender.trim()}`)
 }
 
 export function isValidPincode(code) {
   // Your code here
+  if ( typeof code !== "string") return false
+
+  const codeLength = code.length
+  const startWithZero = code.startsWith("0")
+  const isCodeOnlyNumber = /^\d+$/.test(code)
+
+  return codeLength === 6 && !startWithZero && isCodeOnlyNumber
+
 }
 
-export function formatPostcardField(label, value, width) {
+export function formatPostcardField(label, value, width = 12) {
   // Your code here
+  if (typeof label !== "string" || typeof value !== "string") return ""
+
+  return `${label.padEnd(width)}: ${value}`
 }
 
 export function isFromState(address, stateCode) {
   // Your code here
+  if(typeof address !== "string" || typeof stateCode !== "string") return false
+
+  return address.endsWith(stateCode)
 }
 
 export function countVowels(message) {
   // Your code here
+  if ( typeof message !== "string") return 0
+
+  const vowelsInMessage = message.match(/[aeiouAEIOU]/g)
+
+  return vowelsInMessage ? vowelsInMessage.length : 0
 }
